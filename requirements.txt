@@ -1,4 +1,8 @@
 pandas
 sqlalchemy
-pyodbc
+pymysql
+cryptography
+python-dotenv
 kaggle
+matplotlib
+seaborn

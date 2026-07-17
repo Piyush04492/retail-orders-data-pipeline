@@ -1,6 +1,10 @@
-kaggle.json
+.env
+.env/
 .ipynb_checkpoints/
 __pycache__/
 *.pyc
 venv/
-.env/
+kaggle.json
+data/raw/*
+data/processed/*
+outputs/reports/*

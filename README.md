@@ -1,38 +1,80 @@
 # Retail Orders: End-to-End Data Pipeline & Analytics
 
-## 📋 Project Overview
-This project demonstrates a full-cycle data engineering and analytics workflow. It handles the challenges of "dirty" raw data, automates ETL (Extract, Transform, Load) processes using Python, and utilizes SQL for complex business logic.
+## Project Overview
+This project represents a production-grade, industry-standard Python data engineering and analytics repository. It automates the ETL (Extract, Transform, Load) pipeline for retail order datasets, cleanses dirty raw data, ingests it into a MySQL database, and runs complex analytical queries with professional Jupyter notebook reporting.
 
-## 🛠️ Tech Stack
-- **Language:** Python 3.x
-- **Libraries:** Pandas, SQLAlchemy, Kaggle API, Zipfile
-- **Database:** Microsoft SQL Server (T-SQL)
-- **Environment:** Jupyter Notebook / Anaconda
+## Key Features
+1. **Automated Data Extraction**: Downloads datasets programmatically using the Kaggle API.
+2. **Data Cleansing & Transformation**: Standardizes dirty headers into `snake_case`, handles missing values, and performs row-level feature engineering (`discount`, `sale_price`, and `profit`).
+3. **Database Ingestion**: Modulary loads structured data into MySQL via SQLAlchemy.
+4. **14 Analytical SQL Queries**: Includes window functions and CTEs to extract insights such as monthly sales trends, YoY growth, and top-selling products.
+5. **Insights Visualizations**: Generates and saves visual reports into `outputs/figures/`.
 
-## 🚀 Key Features
-1. **Automated Data Extraction:** Directly fetching datasets using the Kaggle API for a reproducible workflow.
-2. **Data Cleaning & Preprocessing:** - Handling specialized null values (e.g., 'Not Available', 'Unknown').
-   - Standardizing column headers to `snake_case`.
-   - Dynamic data type conversion (e.g., Objects to Datetime).
-3. **Feature Engineering:** Calculating new metrics like `Discount`, `Sale Price`, and `Profit` at the row level.
-4. **Database Integration:** Loading cleaned data into SQL Server with optimized data types via SQLAlchemy.
-5. **Advanced SQL Analytics:** - Month-over-Month (MoM) growth comparisons.
-   - Using **CTEs** and **Window Functions** to find top-performing products by region and category.
+## Tech Stack
+- **Language**: Python 3.x
+- **Libraries**: Pandas, SQLAlchemy, PyMySQL, Cryptography, Kaggle API, Python-dotenv, Matplotlib, Seaborn
+- **Database**: MySQL
 
-## 📂 Project Structure
-- `data_pipeline.ipynb`: Python script for API connection, data cleaning, and SQL loading.
-- `analysis_queries.sql`: SQL scripts for solving core business questions.
-- `requirements.txt`: Necessary Python libraries.
+## Project Structure
+```
+sales-analysis/
+│
+├── data/
+│   ├── raw/                  # Downloaded raw zip and extracted CSV
+│   └── processed/            # Transformed dataset in CSV format
+│
+├── notebooks/
+│   ├── 01_data_cleaning.ipynb    # Ingestion and cleaning verification
+│   ├── 02_sql_analysis.ipynb     # DB connection and 14 SQL queries execution
+│   └── 03_visualizations.ipynb   # Visualization generation and saving
+│
+├── sql/                      # 14 extracted analytical SQL files
+│
+├── src/                      # ETL codebase package modules
+│   ├── __init__.py
+│   ├── config.py             # Reusable directory and dataset path configurations
+│   ├── utils.py              # Log setups and utility helpers
+│   ├── database.py           # Database connection and engine creation
+│   ├── extract.py            # Extraction and validation
+│   ├── transform.py          # Data cleansing and feature engineering
+│   └── load.py               # SQL database loading
+│
+├── outputs/
+│   ├── figures/              # Generated visualization charts (.png)
+│   └── reports/              # Reports and exports
+│
+├── .env.example              # Database credential template
+├── .gitignore                # Production git exclude list
+├── README.md
+├── requirements.txt          # Package dependencies
+└── main.py                   # Reusable ETL pipeline orchestrator
+```
 
-## 🔧 Setup & Usage
-1. **Kaggle Credentials:** Ensure your `kaggle.json` is located in your `.kaggle` folder (typically `C:\Users\<User>\.kaggle\`).
-2. **Database Connection:** Update the `create_engine` string in the Python script with your local SQL Server name.
-3. **Execution:** - Run the Jupyter Notebook to download, clean, and export the data.
-   - Run the SQL scripts in SQL Server Management Studio (SSMS) to generate insights.
+## Setup & Ingestion
 
-## 📈 Sample Insights Included
-- **Growth Analysis:** Which subcategories saw the highest profit increase from 2022 to 2023.
-- **Regional Performance:** Identifying the top 5 highest-selling products specific to each geographic region.
+### 1. Prerequisites
+Ensure your Kaggle API credentials file `kaggle.json` is located in your home `.kaggle/` directory.
 
----
-*Inspired by the data engineering tutorials by Ankit Bansal.*
+### 2. Database Environment Setup
+Copy the env template:
+```bash
+cp .env.example .env
+```
+Populate `.env` with your local MySQL database configurations.
+
+### 3. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run ETL Pipeline
+Execute the pipeline to extract, transform, and load data into the database:
+```bash
+python main.py
+```
+
+## Analytics Notebooks
+Run the Jupyter notebooks in order:
+1. `notebooks/01_data_cleaning.ipynb` to verify data cleansing steps.
+2. `notebooks/02_sql_analysis.ipynb` to execute the 14 SQL business questions.
+3. `notebooks/03_visualizations.ipynb` to generate charts saved under `outputs/figures/`.
